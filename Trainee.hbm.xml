@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate Mapping DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>  
+    <class name="com.ideas2it.employee.model.Trainee" table="trainee" > 
+          
+          <id name = "traineeId" column = "Trainee_id">
+              <generator class="native"></generator>
+          </id>
+          <property name = "trainingPeriod" column = "Training_Period"></property>
+          <many-to-one name = "employee" class = "com.ideas2it.employee.model.Employee" 
+               not-null="true" column="E_Id" unique="true" cascade = "all" fetch = "join">
+	  </many-to-one>
+          <set name = "trainers" table = "employee_relation" inverse = "false" lazy = "true" fetch = "select" cascade = "save-update">
+              <key column = "trainee_id" />
+              <many-to-many class = "com.ideas2it.employee.model.Trainer" column = "trainer_id" fetch = "join" />
+          </set>          
+     </class>  
+</hibernate-mapping>
