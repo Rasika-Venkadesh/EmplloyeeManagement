@@ -1,0 +1,16 @@
+<web-app>
+    <servlet>
+        <servlet-name>Employee</servlet-name>
+        <servlet-class>com.ideas2it.employee.controller.EmployeeController</servlet-class>
+    </servlet>
+  
+    <servlet-mapping>
+       <servlet-name>Employee</servlet-name>
+       <url-pattern>/EmployeeController</url-pattern>
+    </servlet-mapping>
+
+</web-app>  
+
+
+
+    

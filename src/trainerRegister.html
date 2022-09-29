@@ -1,0 +1,58 @@
+<html>
+ <head>
+  <title>Trainer Portal</title>
+ </head>
+
+ <body>
+  <h2>Add Trainer Details</h2>
+  <form action = "EmployeeController?action=trainerRegister" method = "post">
+
+    Name:<input type = "text" name = "name"/> <br/><br/>
+    DateOfBirth:<input type = "date" name = "dateOfBirth"/> <br/><br/>
+    DateOfJoin:<input type = "date" name = "dateOfJoin"/> <br/><br/>
+
+    Gender:<input type="radio" id="Male" name="gender" value="Male">
+           <label for="Male">Male</label><br>
+           <input type="radio" id="Female" name="gender" value="Female">
+           <label for="Female">Female</label><br>
+           <input type="radio" id="Others" name="gender" value="Others">
+           <label for="Others">Others</label><br>
+        
+    PhoneNumber:<input type = "number" name = "phoneNumber"/> <br/><br/>
+    EmailId:<input type = "email" name = "emailId"/> <br/><br/>
+    Salary:<input type = "number" name = "salary"/> <br/><br/>
+    AadharId:<input type = "number" name = "aadharId"/> <br/><br/>
+
+    BloodGroup:<br><input type="radio" id="a+ve" name="bloodGroup" value="A Positive">
+               <label for="A Positive">A positive</label><br>
+               <input type="radio" id="b+ve" name="bloodGroup" value="B Positive">
+               <label for="B Positive">B positive</label><br>
+               <input type="radio" id="o+ve" name="bloodGroup" value="O Positive">
+               <label for="O Positive">O positive</label><br>
+               <input type="radio" id="ab+ve" name="bloodGroup" value="AB Positive">
+               <label for="AB Positive">AB positive</label><br>               
+               <input type="radio" id="A-ve" name="bloodGroup" value="A Negative">
+               <label for="A Negative">A Negative</label><br>
+               <input type="radio" id="B-ve" name="bloodGroup" value="B Negative">
+               <label for="B Negative">B Negative</label><br>
+               <input type="radio" id="AB-ve" name="bloodGroup" value="AB Negative">
+               <label for="AB Negative">AB Negative</label><br>
+               <input type="radio" id="O-ve" name="bloodGroup" value="O Negative">
+               <label for="O Negative">O Negative</label><br>
+              
+    Qualification:<input type = "text" name = "qualification"/> <br/><br/>
+
+    Experience:<input type = "number" name = "experience"/> <br/><br/>
+    Role: <input type = "text" name = "role" value = "Trainer" readonly>
+
+    <br/><br/>
+    <input type = "submit" value = "Add Trainer"/>
+
+    </form>
+  </body>
+</html>
+
+
+
+
+    

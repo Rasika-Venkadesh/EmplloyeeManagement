@@ -1,0 +1,64 @@
+<html>
+ <head>
+  <title>Trainee Portal</title>
+ </head>
+
+ <body>
+  <h2>Add Trainee Details</h2>
+  <form action = "EmployeeController?action=traineeRegister" method = "post">
+
+    Name:<input type = "text" name = "name"/> <br/><br/>
+    DateOfBirth:<input type = "date" name = "dateOfBirth"/> <br/><br/>
+    DateOfJoin:<input type = "date" name = "dateOfJoin"/> <br/><br/>
+
+    Gender:
+    <Select name = "gender">
+    <option value = "Male">Male</option>
+    <option value = "Female">Female</option>
+    <option value = "Others">Others</option>
+    </select> </br></br>
+    
+    PhoneNumber:<input type = "number" name = "phoneNumber"/> <br/><br/>
+    EmailId:<input type = "email" name = "emailId"/> <br/><br/>
+    Salary:<input type = "number" name = "salary"/> <br/><br/>
+    AadharId:<input type = "number" name = "aadharId"/> <br/><br/>
+
+    BloodGroup:
+    <Select name = "bloodGroup">
+    <option value = "A_Positive">A_Positive</option>
+    <option value = "B_Positive">B_Positive</option>
+    <option value = "AB_Positive">AB_Positive</option>
+    <option value = "O_Positive">O_Positive</option>
+    <option value = "A_Negative">A_Negative</option>
+    <option value = "B_Negative">B_Negative</option>
+    <option value = "AB_Negative">AB_Negative</option>
+    <option value = "O_Negative">O_Negative</option>     
+    </select> </br></br>
+
+    Qualification:
+    <Select name = "qualification">
+    <option>BSC</option>
+    <option>BCA</option>
+    <option>BE</option>
+    <option>MSC</option>
+    <option>MCA</option>
+    <option>ME</option>
+    <option>Others</option>     
+    </select> </br></br>
+
+    TrainingPeriod:<input type = "number" name = "trainingPeriod"/> <br/><br/>
+    Role: <input type = "text" name = "role" value = "Trainee" readonly> <br><br>
+    TrainersId:<input type="text" name="trainersId" id="trainersId" multiple size="50"><br>
+    <sub>
+        (You can enter multiple Ids with each seperated by comma)
+    </sub>
+    <br/><br/>
+    <input type = "submit" value = "Add Trainee"/>
+    </form>
+  </body>
+</html>
+
+
+
+
+    
