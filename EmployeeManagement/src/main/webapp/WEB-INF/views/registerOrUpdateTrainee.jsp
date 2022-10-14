@@ -4,6 +4,7 @@
      </head>
     <%@page isELIgnored="false" %>
      <body>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
          <%@ page import = "java.util.ArrayList, java.util.List" %>
          <%@ page import="com.ideas2it.employee.model.Trainer , com.ideas2it.employee.model.Trainee" %>
          <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -90,9 +91,12 @@
                    </tr>
                    <tr>
                         <td>TrainersId : </td>
-                        <td><form:select  path = "trainersId" >
-                         <form:option value = "${trainerIds}" label = "${trainerIds}" />
-                         </form:select></td>
+                        <td><form:select path = "trainersId">
+                                               <c:forEach var="trainer" items="${trainers}" >
+                                               <form:option value="${trainer.employeeId}" label="${trainer.employeeId} - ${trainer.name}"/>
+                                                </c:forEach>
+                                           </form:select>
+                                   </td>
 
                    </tr>
                    <tr>

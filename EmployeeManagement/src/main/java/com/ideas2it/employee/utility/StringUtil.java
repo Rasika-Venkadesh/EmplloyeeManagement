@@ -8,6 +8,13 @@ package com.ideas2it.employee.utility;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * <p>
+ * StringUtil class validates String input
+ * </p>
+ * @author Rasika Venkadesh
+ * @version 1.0
+ **/
 public class StringUtil {
     public StringUtil() {
     }

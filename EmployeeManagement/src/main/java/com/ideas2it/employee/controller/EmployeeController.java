@@ -11,14 +11,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpServlet;
-
+/**
+ * <p>
+ * EmployeeController class  will communicate with user and get the options to
+ * add,display,update and delete (CRUD) object in the list of trainer and
+ * trainee
+ * </p>
+ *
+ * @author Rasika Venkadesh
+ * @version 1.0
+ **/
 
 @Controller
 public class EmployeeController extends HttpServlet {
     private final Logger logger = LogManager.getLogger(EmployeeController.class);
-
     public final TraineeService traineeService;
     public final TrainerService trainerService;
 
@@ -106,6 +113,7 @@ public class EmployeeController extends HttpServlet {
         Trainee trainee = traineeService.getTraineeById(traineeId);
         mav.addObject("trainee", trainee);
         mav.addObject("action", "updateTrainee");
+        mav.addObject("trainers", trainerService.getTrainers());
         mav.setViewName("registerOrUpdateTrainee");
         return mav;
     }

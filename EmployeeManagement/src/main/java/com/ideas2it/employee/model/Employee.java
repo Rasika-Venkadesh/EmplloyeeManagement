@@ -3,6 +3,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * <p>
+ * Employee class holds common fields of employee and having its own getter and setter methods.
+ * </p>
+ * @author Rasika Venkadesh
+ * @version 1.0
+ **/
 @Entity
 @Table(name = "employee")
 @Inheritance(strategy = InheritanceType.JOINED)

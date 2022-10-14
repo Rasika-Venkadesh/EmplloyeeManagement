@@ -8,6 +8,13 @@ package com.ideas2it.employee.utility;
 import java.time.LocalDate;
 import java.time.Period;
 
+/**
+ * <p>
+ * NumberUtil class validates number input
+ * </p>
+ * @author Rasika Venkadesh
+ * @version 1.0
+ **/
 public class NumberUtil {
     public NumberUtil() {
     }

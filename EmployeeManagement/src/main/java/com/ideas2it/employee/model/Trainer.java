@@ -5,13 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.List;
 
+/**
+ * <p>
+ * Trainer class extends from Employee class
+ * </p>
+ * @author Rasika Venkadesh
+ * @version 1.0
+ **/
 @Entity
 @Table(name = "trainer")
 public class Trainer extends Employee {
 
     @Column(name = "Experience", nullable = false)
     private int experience;
-
 
     public Trainer(int employeeId,String name, String dateOfBirth, String dateOfJoin, String gender,
                    long phoneNumber, String emailId, double salary, long aadharId, String bloodGroup,

@@ -7,7 +7,13 @@ package com.ideas2it.employee.utility;
 
 import java.time.LocalDate;
 import java.time.Period;
-
+/**
+ * <p>
+ * DateUtil class validates the date properties
+ * </p>
+ * @author Rasika Venkadesh
+ * @version 1.0
+ **/
 public class DateUtil {
     public DateUtil() {
     }

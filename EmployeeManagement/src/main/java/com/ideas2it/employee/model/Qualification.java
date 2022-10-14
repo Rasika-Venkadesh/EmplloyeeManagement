@@ -6,8 +6,15 @@
 package com.ideas2it.employee.model;
 
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
+
+/**
+ * <p>
+ * Qualification class holds qualification properties of employee
+ * </p>
+ * @author Rasika Venkadesh
+ * @version 1.0
+ **/
 
 @Entity
 @Table(name = "qualification")

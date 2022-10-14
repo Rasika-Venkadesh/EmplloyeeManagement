@@ -7,6 +7,13 @@ package com.ideas2it.employee.model;
 
 import javax.persistence.*;
 
+/**
+ * <p>
+ * Role class holds role properties of employee
+ * </p>
+ * @author Rasika Venkadesh
+ * @version 1.0
+ **/
 @Entity
 @Table(name = "role")
 public class Role {

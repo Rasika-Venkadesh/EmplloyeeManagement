@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * <p>
+ * Trainee class extends from Employee class
+ * </p>
+ * @author Rasika Venkadesh
+ * @version 1.0
+ **/
 @Entity
 @Table(name = "trainee")
 public class Trainee extends Employee {

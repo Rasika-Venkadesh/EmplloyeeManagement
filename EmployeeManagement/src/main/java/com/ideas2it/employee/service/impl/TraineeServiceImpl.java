@@ -10,7 +10,9 @@ import com.ideas2it.employee.customException.BadRequest;
 import com.ideas2it.employee.model.Qualification;
 import com.ideas2it.employee.model.Role;
 import com.ideas2it.employee.model.Trainee;
+import com.ideas2it.employee.model.Trainer;
 import com.ideas2it.employee.repository.TraineeRepository;
+import com.ideas2it.employee.repository.TrainerRepository;
 import com.ideas2it.employee.service.TraineeService;
 import com.ideas2it.employee.utility.DateUtil;
 import com.ideas2it.employee.utility.NumberUtil;
@@ -20,17 +22,24 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TraineeServiceImpl implements TraineeService {
     private final Logger logger = LogManager.getLogger(TraineeServiceImpl.class);
+@Autowired
+  TrainerServiceImpl trainerService;
 
     private final TraineeRepository traineeRepository;
+
+    @Autowired
+    TrainerRepository trainerRepository;
 
     public TraineeServiceImpl(TraineeRepository traineeRepository) {
         this.traineeRepository = traineeRepository;
@@ -104,6 +113,8 @@ public class TraineeServiceImpl implements TraineeService {
         int trainingPeriod = trainee.getTrainingPeriod();
         Role role = trainee.getRole();
         List<Integer> trainersId = trainee.getTrainersId();
+        Set<Trainer> trainers1 = Set.copyOf(trainerRepository.findAllById(trainersId));
+        trainee.setTrainers(trainers1);
         if (invalidOption.size() == 0) {
             int var10000 = CommonUtil.employeeId++;
                 traineeRepository.save(trainee);

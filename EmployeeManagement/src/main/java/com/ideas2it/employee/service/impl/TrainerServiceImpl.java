@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Optional;
 
 @Service
@@ -113,9 +114,9 @@ public  class TrainerServiceImpl implements TrainerService {
         Optional<Role> role = roleRepository.findByRole(trainer.getRole().getRole());
         role.ifPresent(trainer::setRole);
 
-        //Qualification qualification = trainer.getQualification();
+
+
         int experience = trainer.getExperience();
-        //Role role = trainer.getRole();
         if (invalidOption.size() == 0) {
             int var10000 = CommonUtil.employeeId++;
             trainerRepository.save(trainer);
