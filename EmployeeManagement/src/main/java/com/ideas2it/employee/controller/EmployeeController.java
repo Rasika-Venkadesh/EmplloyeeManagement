@@ -1,11 +1,15 @@
 package com.ideas2it.employee.controller;
 
+import com.ideas2it.employee.dto.TraineeDto;
+import com.ideas2it.employee.dto.TrainerDto;
 import com.ideas2it.employee.model.Trainee;
 import com.ideas2it.employee.model.Trainer;
 import com.ideas2it.employee.service.TraineeService;
 import com.ideas2it.employee.service.TrainerService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +33,9 @@ public class EmployeeController extends HttpServlet {
     public final TraineeService traineeService;
     public final TrainerService trainerService;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     public EmployeeController(TraineeService traineeService, TrainerService trainerService) {
         this.traineeService = traineeService;
         this.trainerService = trainerService;
@@ -42,7 +49,7 @@ public class EmployeeController extends HttpServlet {
     @GetMapping("/trainerForm")
     public ModelAndView trainerForm() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("trainer", new Trainer());
+        modelAndView.addObject("trainerDto", new TrainerDto());
         modelAndView.addObject("action", "trainerRegister");
         modelAndView.setViewName("trainerRegister");
         return modelAndView;
@@ -51,7 +58,7 @@ public class EmployeeController extends HttpServlet {
     @GetMapping("/traineeForm")
     public ModelAndView traineeForm() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("trainee", new Trainee());
+        modelAndView.addObject("traineeDto", new TraineeDto());
         modelAndView.addObject("action", "traineeRegister");
         modelAndView.addObject("trainers", trainerService.getTrainers());
         modelAndView.setViewName("traineeRegister");
@@ -59,9 +66,9 @@ public class EmployeeController extends HttpServlet {
     }
 
     @RequestMapping(value = "/trainerRegister")
-    public String addTrainer(@ModelAttribute Trainer trainer, RedirectAttributes rm) {
-        trainerService.validateAndAddTrainerDetails(trainer);
-        if (trainer.getEmployeeId() > 0) {
+    public String addTrainer(@ModelAttribute TrainerDto trainerDto, RedirectAttributes rm) {
+        trainerService.validateAndAddTrainerDetails(trainerDto);
+        if (trainerDto.getEmployeeId() > 0) {
             rm.addFlashAttribute("message", "Trainer Registered Successfully");
         } else {
             rm.addFlashAttribute("message", "Trainer Updated Successfully");
@@ -70,9 +77,9 @@ public class EmployeeController extends HttpServlet {
     }
 
     @RequestMapping(value = "/traineeRegister")
-    public String addTrainee(@ModelAttribute Trainee trainee, RedirectAttributes rm) {
-        traineeService.validateAndAddTraineeDetails(trainee);
-        if (trainee.getEmployeeId() > 0) {
+    public String addTrainee(@ModelAttribute TraineeDto traineeDto, RedirectAttributes rm) {
+        traineeService.validateAndAddTraineeDetails(traineeDto);
+        if (traineeDto.getEmployeeId() > 0) {
             rm.addFlashAttribute("message", "Trainee Registered Successfully");
         } else {
             rm.addFlashAttribute("message", "Trainee Updated Successfully");
@@ -100,8 +107,8 @@ public class EmployeeController extends HttpServlet {
     @GetMapping("/updateTrainer")
     public ModelAndView updateTrainer(@RequestParam ("trainerId") int trainerId, Model model) {
         ModelAndView mav = new ModelAndView("registerOrUpdateTrainer");
-        Trainer trainer = trainerService.getTrainerId(trainerId);
-        mav.addObject("trainer", trainer);
+        TrainerDto trainerDto = trainerService.getTrainerId(trainerId);
+        mav.addObject("trainerDto", trainerDto);
         mav.addObject("action", "updateTrainer");
         mav.setViewName("registerOrUpdateTrainer");
         return mav;
@@ -110,8 +117,8 @@ public class EmployeeController extends HttpServlet {
     @GetMapping("/updateTrainee")
     public ModelAndView updateTrainee(@RequestParam ("traineeId") int traineeId, Model model) {
         ModelAndView mav = new ModelAndView("registerOrUpdateTrainee");
-        Trainee trainee = traineeService.getTraineeById(traineeId);
-        mav.addObject("trainee", trainee);
+        TraineeDto traineeDto = traineeService.getTraineeById(traineeId);
+        mav.addObject("traineeDto", traineeDto);
         mav.addObject("action", "updateTrainee");
         mav.addObject("trainers", trainerService.getTrainers());
         mav.setViewName("registerOrUpdateTrainee");

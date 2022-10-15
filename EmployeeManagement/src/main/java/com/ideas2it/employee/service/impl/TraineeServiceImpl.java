@@ -7,10 +7,17 @@ package com.ideas2it.employee.service.impl;
 
 import com.ideas2it.employee.common.CommonUtil;
 import com.ideas2it.employee.customException.BadRequest;
+import com.ideas2it.employee.customException.TraineeNotFoundException;
+import com.ideas2it.employee.customException.TrainerNotFoundException;
+import com.ideas2it.employee.dto.TraineeDto;
+import com.ideas2it.employee.mapper.TraineeMapper;
+import com.ideas2it.employee.mapper.TrainerMapper;
 import com.ideas2it.employee.model.Qualification;
 import com.ideas2it.employee.model.Role;
 import com.ideas2it.employee.model.Trainee;
 import com.ideas2it.employee.model.Trainer;
+import com.ideas2it.employee.repository.QualificationRepository;
+import com.ideas2it.employee.repository.RoleRepository;
 import com.ideas2it.employee.repository.TraineeRepository;
 import com.ideas2it.employee.repository.TrainerRepository;
 import com.ideas2it.employee.service.TraineeService;
@@ -19,10 +26,8 @@ import com.ideas2it.employee.utility.NumberUtil;
 import com.ideas2it.employee.utility.StringUtil;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,6 +46,12 @@ public class TraineeServiceImpl implements TraineeService {
     @Autowired
     TrainerRepository trainerRepository;
 
+    @Autowired
+    QualificationRepository qualificationRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
     public TraineeServiceImpl(TraineeRepository traineeRepository) {
         this.traineeRepository = traineeRepository;
     }
@@ -48,13 +59,23 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     @Transactional
-    public List<Trainee> getTrainees() {
-        return traineeRepository.findAll();
-    }
+    public List<TraineeDto> getTrainees()  {
+        List<Trainee> trainees =  traineeRepository.findAll();
+            return trainees.stream().map(TraineeMapper::convertTraineeToTraineeDto).collect(Collectors.toList());
+        }
+
+
 
     @Override
-    public Trainee getTraineeById(int traineeId)  {
-        return traineeRepository.getReferenceById(traineeId);
+    public TraineeDto getTraineeById(int traineeId) throws TraineeNotFoundException {
+        TraineeDto traineeDto = null;
+        Optional<Trainee> trainee = traineeRepository.findById(traineeId);
+        if (trainee.isEmpty()) {
+            throw new TraineeNotFoundException("Trainee not found...");
+        }
+        traineeDto = TraineeMapper.convertTraineeToTraineeDto(trainee.get());
+        return traineeDto;
+
     }
 
     @Override
@@ -65,59 +86,67 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     @Transactional
-    public List<Integer> validateAndAddTraineeDetails(Trainee trainee) {
+    public List<Integer> validateAndAddTraineeDetails(TraineeDto traineeDto) {
         List<Integer> invalidOption = new ArrayList<>();
         String invalidOptionDetails = "\n\tInvalid Details of Employee\n";
         int no = 0;
-        String name = trainee.getName();
+        String name = traineeDto.getName();
         if (!StringUtil.isValidName(name)) {
             invalidOption.add(1);
         }
 
-        String dateOfBirth = trainee.getDateOfBirth().toString();
-        if (DateUtil.computePeriod(trainee.getDateOfBirth(), LocalDate.now()) < 18 && !Objects.equals(trainee.getDateOfBirth(), LocalDate.now())) {
+        String dateOfBirth = traineeDto.getDateOfBirth().toString();
+        if (DateUtil.computePeriod(traineeDto.getDateOfBirth(), LocalDate.now()) < 18 && !Objects.equals(traineeDto.getDateOfBirth(), LocalDate.now())) {
             invalidOption.add(2);
         }
 
-        String dateOfJoin = trainee.getDateOfJoin().toString();
-        if (DateUtil.computeDays(trainee.getDateOfJoin(), LocalDate.now()) <= 1) {
+        String dateOfJoin = traineeDto.getDateOfJoin().toString();
+        if (DateUtil.computeDays(traineeDto.getDateOfJoin(), LocalDate.now()) <= 1) {
             invalidOption.add(3);
         }
 
-        String gender = trainee.getGender();
-        String tempNumber = String.valueOf(trainee.getPhoneNumber());
+        String gender = traineeDto.getGender();
+        String tempNumber = String.valueOf(traineeDto.getPhoneNumber());
         long phoneNumber = Long.parseLong(tempNumber);
         if (NumberUtil.validNumberCheck(tempNumber, 10)) {
             invalidOption.add(5);
         }
 
-        String emailId = trainee.getEmailId();
+        String emailId = traineeDto.getEmailId();
         if (!StringUtil.isValidEmailId(emailId)) {
             invalidOption.add(6);
         }
 
-        String tempSalary = String.valueOf(trainee.getSalary());
+        String tempSalary = String.valueOf(traineeDto.getSalary());
         double salary = Double.parseDouble(tempSalary);
         if (NumberUtil.validSalaryCheck(salary, 7)) {
             invalidOption.add(7);
         }
 
-        String tempAadhar = String.valueOf(trainee.getAadharId());
+        String tempAadhar = String.valueOf(traineeDto.getAadharId());
         long aadharId = Long.parseLong(tempAadhar);
         if (NumberUtil.validNumberCheck(tempAadhar, 16)) {
             invalidOption.add(8);
         }
 
-        String bloodGroup = trainee.getBloodGroup();
-        Qualification qualification = trainee.getQualification();
-        int trainingPeriod = trainee.getTrainingPeriod();
-        Role role = trainee.getRole();
-        List<Integer> trainersId = trainee.getTrainersId();
+        String bloodGroup = traineeDto.getBloodGroup();
+
+        Trainee trainee =  TraineeMapper.convertTraineeDtoToTrainee(traineeDto);
+        Optional<Qualification> qualification = qualificationRepository.findByQualification(trainee.getQualification().getQualification());
+        qualification.ifPresent(trainee::setQualification);
+
+        Optional<Role> role = roleRepository.findByRole(trainee.getRole().getRole());
+        role.ifPresent(trainee::setRole);
+
+        //Qualification qualification = traineeDto.getQualification();
+        int trainingPeriod = traineeDto.getTrainingPeriod();
+        //Role role = traineeDto.getRole();
+        List<Integer> trainersId = traineeDto.getTrainersId();
         Set<Trainer> trainers1 = Set.copyOf(trainerRepository.findAllById(trainersId));
-        trainee.setTrainers(trainers1);
+        traineeDto.setTrainers(trainers1);
         if (invalidOption.size() == 0) {
             int var10000 = CommonUtil.employeeId++;
-                traineeRepository.save(trainee);
+                traineeRepository.save(TraineeMapper.convertTraineeDtoToTrainee(traineeDto));
         } else {
             throw new BadRequest(invalidOption, invalidOptionDetails);
         }

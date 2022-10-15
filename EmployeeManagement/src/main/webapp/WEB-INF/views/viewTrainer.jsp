@@ -1,5 +1,5 @@
 
-<%@page import="com.ideas2it.employee.model.Employee, com.ideas2it.employee.model.Trainer "%>
+<%@page import="com.ideas2it.employee.dto.EmployeeDto, com.ideas2it.employee.dto.TrainerDto "%>
 <%@page import="java.util.ArrayList,java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -43,23 +43,23 @@
                 </tr>
 
 		    <%
-		    ArrayList<Trainer> trainers = (ArrayList<Trainer>)request.getAttribute("Trainers");
-		    for (Trainer trainer: trainers) {
+		    ArrayList<TrainerDto> trainers = (ArrayList<TrainerDto>)request.getAttribute("Trainers");
+		    for (TrainerDto trainerDto: trainers) {
 		    %>
-		       <tr><td><%= trainer.getEmployeeId() %></td>
-		    <td><%= trainer.getName() %></td>
-                    <td><%= trainer.getDateOfBirth() %></td>
-                    <td><%= trainer.getDateOfJoin() %></td>
-		    <td><%= trainer.getGender() %></td>
-                    <td><%= trainer.getPhoneNumber() %></td>
-                    <td><%= trainer.getEmailId() %></td>
-                    <td><%= trainer.getSalary() %></td>
-                    <td><%= trainer.getAadharId() %></td>
-                    <td><%= trainer.getBloodGroup() %></td>
-		    <td><%= trainer.getQualification().getQualification() %></td>
-		    <td><%= trainer.getExperience() %></td>
-            <td><a href="updateTrainer?trainerId=<%=trainer.getEmployeeId()%>" ><input type="button" value="update"></a></td>
-            <td><a href="deleteTrainer?trainerId=<%=trainer.getEmployeeId()%>"  ><input type="button" value="delete"></a></td>
+		       <tr><td><%= trainerDto.getEmployeeId() %></td>
+		    <td><%= trainerDto.getName() %></td>
+                    <td><%= trainerDto.getDateOfBirth() %></td>
+                    <td><%= trainerDto.getDateOfJoin() %></td>
+		    <td><%= trainerDto.getGender() %></td>
+                    <td><%= trainerDto.getPhoneNumber() %></td>
+                    <td><%= trainerDto.getEmailId() %></td>
+                    <td><%= trainerDto.getSalary() %></td>
+                    <td><%= trainerDto.getAadharId() %></td>
+                    <td><%= trainerDto.getBloodGroup() %></td>
+		    <td><%= trainerDto.getQualificationDto().getQualification() %></td>
+		    <td><%= trainerDto.getExperience() %></td>
+            <td><a href="updateTrainer?trainerId=<%=trainerDto.getEmployeeId()%>" ><input type="button" value="update"></a></td>
+            <td><a href="deleteTrainer?trainerId=<%=trainerDto.getEmployeeId()%>"  ><input type="button" value="delete"></a></td>
 		    </tr>
 
 		<% } %>

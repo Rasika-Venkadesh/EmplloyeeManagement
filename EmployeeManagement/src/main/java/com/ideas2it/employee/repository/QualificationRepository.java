@@ -1,7 +1,7 @@
 package com.ideas2it.employee.repository;
 
+import com.ideas2it.employee.dto.QualificationDto;
 import com.ideas2it.employee.model.Qualification;
-import com.ideas2it.employee.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

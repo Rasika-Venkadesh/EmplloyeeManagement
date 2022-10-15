@@ -5,10 +5,11 @@
  <body>
   <h2>Add Trainer Details</h2>
   <%@page import ="com.ideas2it.employee.model.Trainer, com.ideas2it.employee.model.Employee" %>
+  <%@page import = "com.ideas2it.employee.dto.TrainerDto" %>
   <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
   <%@page contentType="text/html" pageEncoding="UTF-8"%>
   <!DOC TYPE html>
-      <form:form method = "Post" modelAttribute="trainer" action = "trainerRegister">
+      <form:form method = "Post" modelAttribute="trainerDto" action = "trainerRegister">
       <input type="hidden" name="action" value="trainerRegister" >
       <form:hidden path = "employeeId" /><br>
 
@@ -64,7 +65,7 @@
           </tr>
           <tr>
                <td>Qualification: </td>
-               <td><form:input path = "qualification.qualification" /></td>
+               <td><form:input path = "qualificationDto.qualification" /></td>
           </tr>
           <tr>
                <td>Experience : </td>
@@ -72,7 +73,7 @@
           </tr>
           <tr>
                <td>Role : </td>
-               <td><form:select path = "role.role" size="1">
+               <td><form:select path = "roleDto.role" size="1">
                <form:option value = "Trainer" label = "Trainer" />
                </form:select></td>
           </tr>

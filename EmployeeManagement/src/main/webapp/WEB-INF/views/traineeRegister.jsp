@@ -9,11 +9,12 @@
   <%@ page import="java.util.ArrayList , java.util.List" %>
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
   <%@page import ="com.ideas2it.employee.model.Trainer, com.ideas2it.employee.model.Trainee,  com.ideas2it.employee.model.Employee" %>
+  <%@page import ="com.ideas2it.employee.dto.TrainerDto, com.ideas2it.employee.dto.TraineeDto, com.ideas2it.employee.dto.EmployeeDto" %>
   <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
   <%@page contentType="text/html" pageEncoding="UTF-8"%>
   <!DOC TYPE html>
-        <form:form method = "Post" modelAttribute="trainee" action = "traineeRegister">
+        <form:form method = "Post" modelAttribute="traineeDto" action = "traineeRegister">
         <input type="hidden" name="action" value="traineeRegister" >
         <form:hidden path = "employeeId" /><br>
         <table >
@@ -68,7 +69,7 @@
             </tr>
             <tr>
                  <td>Qualification: </td>
-                 <td><form:input path = "qualification.qualification" /></td>
+                 <td><form:input path = "qualificationDto.qualification" /></td>
             </tr>
             <tr>
                  <td>Training Period: </td>
@@ -76,7 +77,7 @@
             </tr>
             <tr>
                  <td>Role : </td>
-                 <td><form:select path = "role.role" size="1">
+                 <td><form:select path = "roleDto.role" size="1">
                  <form:option value = "Trainee" label = "Trainee" />
                  </form:select></td>
             </tr>
@@ -85,8 +86,8 @@
                <td>Trainers Ids : </td>
                <td>
                <form:select path = "trainersId">
-                   <c:forEach var="trainer" items="${trainers}" >
-                   <form:option value="${trainer.employeeId}" label="${trainer.employeeId} - ${trainer.name}"/>
+                   <c:forEach var="trainerDto" items="${trainers}" >
+                   <form:option value="${trainerDto.employeeId}" label="${trainerDto.employeeId} - ${trainerDto.name}"/>
                     </c:forEach>
                </form:select>
                </td>

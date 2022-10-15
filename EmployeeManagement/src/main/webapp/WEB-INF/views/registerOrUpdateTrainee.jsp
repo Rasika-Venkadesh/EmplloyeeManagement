@@ -7,22 +7,23 @@
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
          <%@ page import = "java.util.ArrayList, java.util.List" %>
          <%@ page import="com.ideas2it.employee.model.Trainer , com.ideas2it.employee.model.Trainee" %>
+         <%@ page import="com.ideas2it.employee.dto.TrainerDto , com.ideas2it.employee.dto.TraineeDto" %>
          <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
          <% String task = (String)request.getAttribute("action");
-	     Trainee trainee = (Trainee)request.getAttribute("trainee");
+	     TraineeDto traineeDto = (TraineeDto)request.getAttribute("traineeDto");
 	     String heading = "AddTrainee";
 	     if (!task.equals("traineeRegister")) {
 	         heading = "UpdateTrainee";
 	     }
-	     session.setAttribute("trainee", trainee);
+	     session.setAttribute("traineeDto", traineeDto);
          %>
          <h3> <%= heading %> </h3>
-         <form:form action="traineeRegister?task=<%= task%>" method="get" modelAttribute = "trainee">
+         <form:form action="traineeRegister?task=<%= task%>" method="get" modelAttribute = "traineeDto">
          <form:hidden path = "employeeId" /><br>
          <%
              List<Integer> trainerIds = new ArrayList<>();
-             for (Trainer trainer : trainee.getTrainers()) {
-                trainerIds.add(trainer.getEmployeeId());
+             for (TrainerDto trainerDto : traineeDto.getTrainers()) {
+                trainerIds.add(trainerDto.getEmployeeId());
          }
          %>
          <table >
@@ -92,8 +93,8 @@
                    <tr>
                         <td>TrainersId : </td>
                         <td><form:select path = "trainersId">
-                                               <c:forEach var="trainer" items="${trainers}" >
-                                               <form:option value="${trainer.employeeId}" label="${trainer.employeeId} - ${trainer.name}"/>
+                                               <c:forEach var="trainerDto" items="${trainers}" >
+                                               <form:option value="${trainerDto.employeeId}" label="${trainerDto.employeeId} - ${trainerDto.name}"/>
                                                 </c:forEach>
                                            </form:select>
                                    </td>

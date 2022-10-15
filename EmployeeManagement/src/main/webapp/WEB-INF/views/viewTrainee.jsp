@@ -1,5 +1,5 @@
 
-<%@page import="com.ideas2it.employee.model.Trainee, com.ideas2it.employee.model.Trainer "%>
+<%@page import="com.ideas2it.employee.dto.TraineeDto, com.ideas2it.employee.dto.TrainerDto "%>
 <%@page import="java.util.ArrayList,java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -38,30 +38,30 @@
                 </tr>
 
 		    <%
-		    ArrayList<Trainee> trainees = (ArrayList<Trainee>)request.getAttribute("Trainees");
-		    for (Trainee trainee: trainees) {
+		    ArrayList<TraineeDto> trainees = (ArrayList<TraineeDto>)request.getAttribute("Trainees");
+		    for (TraineeDto traineeDto: trainees) {
 		        List<Integer> trainerIds = new ArrayList<>();
-                for (Trainer trainer : trainee.getTrainers()) {
-                    trainerIds.add(trainer.getEmployeeId());
+                for (TrainerDto trainerDto : traineeDto.getTrainers()) {
+                    trainerIds.add(trainerDto.getEmployeeId());
                 }
             %>
 
 		       <tr>
-		           <td><%= trainee.getEmployeeId() %></td>
-		           <td><%= trainee.getName() %></td>
-                   <td><%= trainee.getDateOfBirth() %></td>
-                   <td><%= trainee.getDateOfJoin() %></td>
-		           <td><%= trainee.getGender() %></td>
-                   <td><%= trainee.getPhoneNumber() %></td>
-                   <td><%= trainee.getEmailId() %></td>
-                   <td><%= trainee.getSalary() %></td>
-                   <td><%= trainee.getAadharId() %></td>
-                   <td><%= trainee.getBloodGroup() %></td>
-		           <td><%= trainee.getQualification().getQualification() %></td>
-		           <td><%= trainee.getTrainingPeriod() %></td>
+		           <td><%= traineeDto.getEmployeeId() %></td>
+		           <td><%= traineeDto.getName() %></td>
+                   <td><%= traineeDto.getDateOfBirth() %></td>
+                   <td><%= traineeDto.getDateOfJoin() %></td>
+		           <td><%= traineeDto.getGender() %></td>
+                   <td><%= traineeDto.getPhoneNumber() %></td>
+                   <td><%= traineeDto.getEmailId() %></td>
+                   <td><%= traineeDto.getSalary() %></td>
+                   <td><%= traineeDto.getAadharId() %></td>
+                   <td><%= traineeDto.getBloodGroup() %></td>
+		           <td><%= traineeDto.getQualification().getQualification() %></td>
+		           <td><%= traineeDto.getTrainingPeriod() %></td>
                    <td><%= trainerIds.toString().replaceAll("[\\[\\]]","") %></td>
-                   <td><a href="updateTrainee?traineeId=<%=trainee.getEmployeeId()%>" ><input type="button" value="update"></a></td>
-                   <td><a href="deleteTrainee?traineeId=<%=trainee.getEmployeeId()%>"  ><input type="button" value="delete"></a></td>
+                   <td><a href="updateTrainee?traineeId=<%=traineeDto.getEmployeeId()%>" ><input type="button" value="update"></a></td>
+                   <td><a href="deleteTrainee?traineeId=<%=traineeDto.getEmployeeId()%>"  ><input type="button" value="delete"></a></td>
 		       </tr>
 
 		<% } %>

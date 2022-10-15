@@ -5,17 +5,18 @@
 
      <body>
          <%@ page import="com.ideas2it.employee.model.Trainer , com.ideas2it.employee.model.Employee" %>
+         <%@ page import="com.ideas2it.employee.dto.TrainerDto , com.ideas2it.employee.dto.EmployeeDto" %>
          <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
          <% String task = (String)request.getAttribute("action");
-	     Trainer trainer = (Trainer)request.getAttribute("trainer");
+	     TrainerDto trainerDto = (TrainerDto)request.getAttribute("trainerDto");
 	     String heading = "AddTrainer";
 	     if (!task.equals("trainerRegister")) {
 	         heading = "UpdateTrainer";
 	     }
-	     session.setAttribute("trainer", trainer);
+	     session.setAttribute("trainerDto", trainerDto);
          %>
          <h3> <%= heading %> </h3>
-         <form:form action="trainerRegister?task=<%= task%>" method="get" modelAttribute = "trainer">
+         <form:form action="trainerRegister?task=<%= task%>" method="get" modelAttribute = "trainerDto">
          <form:hidden path = "employeeId" /><br>
          <table >
                    <tr>
