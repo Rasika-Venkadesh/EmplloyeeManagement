@@ -1,5 +1,10 @@
 package com.ideas2it.employee.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -12,34 +17,17 @@ import java.util.List;
  * @author Rasika Venkadesh
  * @version 1.0
  **/
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "trainer")
 public class Trainer extends Employee {
 
     @Column(name = "Experience", nullable = false)
     private int experience;
-
-    public Trainer(int employeeId,String name, String dateOfBirth, String dateOfJoin, String gender,
-                   long phoneNumber, String emailId, double salary, long aadharId, String bloodGroup,
-                   Qualification qualification, Role role,int experience) {
-        super(employeeId,name, dateOfBirth, dateOfJoin, gender, phoneNumber, emailId, salary, aadharId,
-                bloodGroup, qualification, role);
-        this.experience = experience;
-    }
-
-    public Trainer() {
-        super();
-        this.experience = experience;
-    }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-
-
-    public int getExperience() {
-        return this.experience;
-    }
 
 
     public boolean equals(Object o) {

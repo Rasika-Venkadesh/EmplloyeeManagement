@@ -40,10 +40,7 @@
 		    <%
 		    ArrayList<TraineeDto> trainees = (ArrayList<TraineeDto>)request.getAttribute("Trainees");
 		    for (TraineeDto traineeDto: trainees) {
-		        List<Integer> trainerIds = new ArrayList<>();
-                for (TrainerDto trainerDto : traineeDto.getTrainers()) {
-                    trainerIds.add(trainerDto.getEmployeeId());
-                }
+
             %>
 
 		       <tr>
@@ -57,9 +54,9 @@
                    <td><%= traineeDto.getSalary() %></td>
                    <td><%= traineeDto.getAadharId() %></td>
                    <td><%= traineeDto.getBloodGroup() %></td>
-		           <td><%= traineeDto.getQualification().getQualification() %></td>
+		           <td><%= traineeDto.getQualificationDto().getQualification() %></td>
 		           <td><%= traineeDto.getTrainingPeriod() %></td>
-                   <td><%= trainerIds.toString().replaceAll("[\\[\\]]","") %></td>
+                   <td><%= traineeDto.getTrainerNames().toString().replaceAll("[\\[\\]]","") %></td>
                    <td><a href="updateTrainee?traineeId=<%=traineeDto.getEmployeeId()%>" ><input type="button" value="update"></a></td>
                    <td><a href="deleteTrainee?traineeId=<%=traineeDto.getEmployeeId()%>"  ><input type="button" value="delete"></a></td>
 		       </tr>

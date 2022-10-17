@@ -20,12 +20,7 @@
          <h3> <%= heading %> </h3>
          <form:form action="traineeRegister?task=<%= task%>" method="get" modelAttribute = "traineeDto">
          <form:hidden path = "employeeId" /><br>
-         <%
-             List<Integer> trainerIds = new ArrayList<>();
-             for (TrainerDto trainerDto : traineeDto.getTrainers()) {
-                trainerIds.add(trainerDto.getEmployeeId());
-         }
-         %>
+
          <table >
                    <tr>
                        <td>Name : </td>
@@ -78,7 +73,7 @@
                    </tr>
                    <tr>
                         <td>Qualification: </td>
-                        <td><form:input path = "qualification.qualification" /></td>
+                        <td><form:input path = "qualificationDto.qualification" /></td>
                    </tr>
                    <tr>
                         <td>TrainingPeriod : </td>
@@ -86,19 +81,18 @@
                    </tr>
                    <tr>
                         <td>Role : </td>
-                        <td><form:select path = "role.role" size="1">
+                        <td><form:select path = "roleDto.role" size="1">
                         <form:option value = "Trainee" label = "Trainee" />
                         </form:select></td>
                    </tr>
                    <tr>
                         <td>TrainersId : </td>
                         <td><form:select path = "trainersId">
-                                               <c:forEach var="trainerDto" items="${trainers}" >
-                                               <form:option value="${trainerDto.employeeId}" label="${trainerDto.employeeId} - ${trainerDto.name}"/>
-                                                </c:forEach>
-                                           </form:select>
-                                   </td>
-
+                            <c:forEach var="trainerDto" items="${trainers}" >
+                            <form:option value="${trainerDto.employeeId}" label="${trainerDto.employeeId} - ${trainerDto.name}"/>
+                            </c:forEach>
+                            </form:select>
+                            </td>
                    </tr>
                    <tr>
                        <td colspan="2"></br><input type="submit" value="Add Trainee"/>

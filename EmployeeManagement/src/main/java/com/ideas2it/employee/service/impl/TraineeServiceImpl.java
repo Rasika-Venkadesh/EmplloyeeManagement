@@ -128,25 +128,23 @@ public class TraineeServiceImpl implements TraineeService {
         if (NumberUtil.validNumberCheck(tempAadhar, 16)) {
             invalidOption.add(8);
         }
-
         String bloodGroup = traineeDto.getBloodGroup();
 
         Trainee trainee =  TraineeMapper.convertTraineeDtoToTrainee(traineeDto);
         Optional<Qualification> qualification = qualificationRepository.findByQualification(trainee.getQualification().getQualification());
         qualification.ifPresent(trainee::setQualification);
-
+        System.out.println("@@@@@@@@@@@@@"+trainee.getQualification());
+        System.out.println("111111111111111111111111111111111111111"+trainee.getRole().getRole());
         Optional<Role> role = roleRepository.findByRole(trainee.getRole().getRole());
         role.ifPresent(trainee::setRole);
 
-        //Qualification qualification = traineeDto.getQualification();
         int trainingPeriod = traineeDto.getTrainingPeriod();
-        //Role role = traineeDto.getRole();
         List<Integer> trainersId = traineeDto.getTrainersId();
-        Set<Trainer> trainers1 = Set.copyOf(trainerRepository.findAllById(trainersId));
-        traineeDto.setTrainers(trainers1);
+        Set<Trainer> trainersGroup = Set.copyOf(trainerRepository.findAllById(trainersId));
+        trainee.setTrainers(trainersGroup);
         if (invalidOption.size() == 0) {
             int var10000 = CommonUtil.employeeId++;
-                traineeRepository.save(TraineeMapper.convertTraineeDtoToTrainee(traineeDto));
+                traineeRepository.save(trainee);
         } else {
             throw new BadRequest(invalidOption, invalidOptionDetails);
         }

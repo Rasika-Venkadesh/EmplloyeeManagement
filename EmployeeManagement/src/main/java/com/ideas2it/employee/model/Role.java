@@ -5,6 +5,11 @@
 
 package com.ideas2it.employee.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
@@ -14,6 +19,11 @@ import javax.persistence.*;
  * @author Rasika Venkadesh
  * @version 1.0
  **/
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "role")
 public class Role {
@@ -25,23 +35,4 @@ public class Role {
 
     @Column(name = "Role", nullable = false)
     private String role;
-
-    public Role() {
-    }
-
-    public String getRole() {
-        return this.role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public int getRoleId() {
-        return this.roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
 }

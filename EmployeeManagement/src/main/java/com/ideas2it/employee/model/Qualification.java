@@ -5,6 +5,10 @@
 
 package com.ideas2it.employee.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
@@ -16,6 +20,10 @@ import javax.persistence.*;
  * @version 1.0
  **/
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "qualification")
 public class Qualification {
@@ -29,22 +37,4 @@ public class Qualification {
     @Column(name = "qualification",  nullable = false)
     private String qualification;
 
-    public Qualification() {
-    }
-
-    public String getQualification() {
-        return this.qualification;
-    }
-
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-    }
-
-    public int getQualificationId() {
-        return this.qualificationId;
-    }
-
-    public void setQualificationId(int qualificationId) {
-        this.qualificationId = qualificationId;
-    }
 }

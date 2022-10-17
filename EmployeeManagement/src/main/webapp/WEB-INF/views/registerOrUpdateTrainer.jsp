@@ -70,7 +70,7 @@
                    </tr>
                    <tr>
                         <td>Qualification: </td>
-                        <td><form:input path = "qualification.qualification" /></td>
+                        <td><form:input path = "qualificationDto.qualification" /></td>
                    </tr>
                    <tr>
                         <td>Experience : </td>
@@ -78,7 +78,7 @@
                    </tr>
                    <tr>
                         <td>Role : </td>
-                        <td><form:select path = "role.role" size="1">
+                        <td><form:select path = "roleDto.role" size="1">
                         <form:option value = "Trainer" label = "Trainer" />
                         </form:select></td>
                    </tr>
