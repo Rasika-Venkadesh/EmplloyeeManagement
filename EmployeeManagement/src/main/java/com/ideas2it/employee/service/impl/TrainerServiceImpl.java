@@ -69,7 +69,6 @@ public  class TrainerServiceImpl implements TrainerService {
     }
 
     public List<Integer> validateAndAddTrainerDetails(TrainerDto trainerDto) {
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+trainerDto);
         List<Integer> invalidOption = new ArrayList<>();
         String invalidOptionDetails = "\n\tInvalid Details of Employee\n";
         String name = trainerDto.getName();
@@ -112,10 +111,9 @@ public  class TrainerServiceImpl implements TrainerService {
         }
 
         String bloodGroup = trainerDto.getBloodGroup();
-        System.out.println(trainerDto.getQualificationDto());
-       Trainer trainer =  TrainerMapper.convertTrainerDtoToTrainer(trainerDto);
-       Optional<Qualification> qualification = qualificationRepository.findByQualification(trainer.getQualification().getQualification());
-       qualification.ifPresent(trainer::setQualification);
+        Trainer trainer =  TrainerMapper.convertTrainerDtoToTrainer(trainerDto);
+        Optional<Qualification> qualification = qualificationRepository.findByQualification(trainer.getQualification().getQualification());
+        qualification.ifPresent(trainer::setQualification);
         Optional<Role> role = roleRepository.findByRole(trainerDto.getRoleDto().getRole());
         role.ifPresent(trainer::setRole);
 

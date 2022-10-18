@@ -23,42 +23,13 @@
             <table style="width:100%">
                 <tr><th>Id</th>
                     <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Date of Join</th>
-                    <th>Gender</th>
-                    <th>Phone Number</th>
-                    <th>Email Id</th>
-                    <th>Salary</th>
-                    <th>Aadhar Id</th>
-                    <th>Blood Group</th>
-                    <th>Qualification</th>
-                    <th>TrainingPeriod</th>
-                    <th>TrainersId</th>
                     <td colspan="2">Action</td>
                 </tr>
-
-		    <%
-		    ArrayList<TraineeDto> trainees = (ArrayList<TraineeDto>)request.getAttribute("Trainees");
-		    for (TraineeDto traineeDto: trainees) {
-
-            %>
 
 		       <tr>
 		           <td><%= traineeDto.getEmployeeId() %></td>
 		           <td><%= traineeDto.getName() %></td>
-                   <td><%= traineeDto.getDateOfBirth() %></td>
-                   <td><%= traineeDto.getDateOfJoin() %></td>
-		           <td><%= traineeDto.getGender() %></td>
-                   <td><%= traineeDto.getPhoneNumber() %></td>
-                   <td><%= traineeDto.getEmailId() %></td>
-                   <td><%= traineeDto.getSalary() %></td>
-                   <td><%= traineeDto.getAadharId() %></td>
-                   <td><%= traineeDto.getBloodGroup() %></td>
-		           <td><%= traineeDto.getQualificationDto().getQualification() %></td>
-		           <td><%= traineeDto.getTrainingPeriod() %></td>
-                   <td><%= traineeDto.getTrainerNames().toString().replaceAll("[\\[\\]]","") %></td>
-                   <td><a href="updateTrainee?traineeId=<%=traineeDto.getEmployeeId()%>" ><input type="button" value="update"></a></td>
-                   <td><a href="deleteTrainee?traineeId=<%=traineeDto.getEmployeeId()%>"  ><input type="button" value="delete"></a></td>
+                   <td><a href ="viewPage?traineeId=<%=traineeDto.getEmployeeId()%>"><input type = "button" value = "view"></a></td>
 		       </tr>
 
 		<% } %>

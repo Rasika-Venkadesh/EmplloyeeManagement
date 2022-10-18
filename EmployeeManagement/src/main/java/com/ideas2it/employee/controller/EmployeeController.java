@@ -68,7 +68,6 @@ public class EmployeeController extends HttpServlet {
     @RequestMapping(value = "/trainerRegister")
     public String addTrainer(@ModelAttribute TrainerDto trainerDto, RedirectAttributes rm) {
         trainerService.validateAndAddTrainerDetails(trainerDto);
-        System.out.println(trainerDto.getQualificationDto());
         if (trainerDto.getEmployeeId() > 0) {
             rm.addFlashAttribute("message", "Trainer Registered Successfully");
         } else {
@@ -79,7 +78,6 @@ public class EmployeeController extends HttpServlet {
 
     @RequestMapping(value = "/traineeRegister")
     public String addTrainee(@ModelAttribute TraineeDto traineeDto, RedirectAttributes rm) {
-        System.out.println(traineeDto.getRoleDto().getRole());
         traineeService.validateAndAddTraineeDetails(traineeDto);
         if (traineeDto.getEmployeeId() > 0) {
             rm.addFlashAttribute("message", "Trainee Registered Successfully");
@@ -95,6 +93,14 @@ public class EmployeeController extends HttpServlet {
         ModelAndView mav = new ModelAndView();
         mav.addObject("Trainers", trainerService.getTrainers());
         mav.setViewName("viewTrainer");
+        return mav;
+    }
+
+    @GetMapping(value = "/viewPage")
+    public ModelAndView viewPage(@RequestParam("trainerId") int trainerId,Model model) {
+        ModelAndView mav = new ModelAndView("viewPage");
+        mav.addObject("trainerDto", trainerService.getTrainerId(trainerId));
+        mav.setViewName("viewPage");
         return mav;
     }
 
