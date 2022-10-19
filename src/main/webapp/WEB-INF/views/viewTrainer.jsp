@@ -13,12 +13,24 @@
 
     <body>
         <table>
-            <style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>
-                <h2>Trainer List</h2>
-                <table style="width:100%">
-                <tr><th>Id</th>
+            <style>
+            table, th, td {
+                border: 1px solid black;border-collapse: collapse;margin-left:auto;margin-right:auto
+            }
+
+            .button {
+                margin:auto;
+                display:block;
+                background-color : #6495ED;
+            }
+            </style>
+
+                <h1 style="text-align:center">Trainer List</h1>
+                <table style="width:50%">
+                <tr>
+                    <th>Id</th>
                     <th>Name</th>
-                    <td colspan="2">Action</td>
+                    <td colspan="2"><b>Action</b></td>
                 </tr>
 
 		    <%
@@ -28,12 +40,13 @@
 		       <tr>
 		            <td><%= trainerDto.getEmployeeId() %></td>
 		            <td><%= trainerDto.getName() %></td>
-		            <td><a href ="viewPage?trainerId=<%=trainerDto.getEmployeeId()%>"><input type = "button" value = "view"></a></td>
+		            <td><a href ="viewPage?trainerId=<%=trainerDto.getEmployeeId()%>">
+		            <input type = "button" value = "view" Margin: 0 auto></a></td>
 		       </tr>
 
 		<% } %>
 		</table>
-                <input type="button" value="Back to Main Menu" onclick="history.go(-1)">
+                <input type="button" class = "button" value="Back to Main Menu" onclick="history.go(-1)" >
                 </div>
 	</body>
 </html>

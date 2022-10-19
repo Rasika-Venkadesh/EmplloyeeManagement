@@ -1,181 +1,180 @@
 <!DOC TYPE html>
 <html xmlns:class="http://www.w3.org/1999/xhtml">
 <%@page isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
- <%@page import="com.ideas2it.employee.dto.EmployeeDto, com.ideas2it.employee.dto.TrainerDto "%>
+ <%@page import="com.ideas2it.employee.dto.EmployeeDto, com.ideas2it.employee.dto.TrainerDto, com.ideas2it.employee.dto.TraineeDto "%>
  <%@page import="java.util.ArrayList,java.util.List"%>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-  body {
-  font-family: consolas;
-  color: #1f253b;
-}
+    <%
+     String action= "${action}";
+     %>
+     <style>
+       body {
+          font-family: consolas;
+          color: #1f253b;
+          margin: 0;
+          padding: 0;
+       }
 
-h2, h3{
-  margin:0;
-}
+       h2, h3{
+          margin:0;
+       }
 
-.split {
-  height: 100%;
-  position: absolute;
-  z-index: 1;
-  top: 10;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
+       .split {
+          padding-top: 20px;
+       }
 
-.left {
-  width: 25%;
-  left: 0;
-  background-color: #FFFFFF;
-  padding-top : 50px;
+       .left {
+          width: 20%;
+          background-color: #FFFFFF;
+          float: left;
+       }
 
-}
+       .right {
+           float: right;
+           width: 80%;
+       }
 
-.right {
-    overflow : auto;
-    width: 75%;
-    right: 0;
-    padding-right : 60px;
-    padding-left : 20px;
+       .centeredleft {
+           text-align: center;
+           padding-left : 40px;
+           padding-right : 40px;
+       }
 
-}
+       .centeredright {
+           text-align: left;
+           margin-top : 1px;
+           margin-bottom : 10px;
+           margin-left : 10px;
+           margin-right : 10px;
+           padding-left : 30px;
+           padding-right : 30px;
+       }
 
-.centeredleft {
-  position: absolute;
-  top: 35%;
-  left: 40%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+       .centered img {
+           width: 100px;
+           border-radius: 50%;
+           padding-top : 10px;
+           padding-bottom:10px;
+           padding-left : 0px;
+       }
 
-.centeredright {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: left;
-  margin-top : 1px;
-  margin-bottom : 10px;
-  margin-left : 10px;
-  margin-right : 10px;
-  padding-left : 30px;
-}
+       .properties {
+           width : 200px;
+           border-bottom-style : outset;
+           border-radius : 10%;
+           padding-right : 40px;
+       }
 
-.centered img {
-  width: 200px;
-  border-radius: 50%;
-  padding-top : 10px;
-  padding-bottom:10px;
-  padding-left : 0px;
-}
+       table{
+           border: 1px solid transparent;
+           width : 100%;
+           border-collapse:collapse;
+       }
 
-.properties {
-  width : 200px;
-  border-bottom-style : outset;
-  border-radius : 10%;
-}
+       th {
+           text-align:left;
+           padding-left : 40px;
+           font-size : 17px;
+           font-weight : 100;
+       }
 
-table{
-  border: 1px solid transparent;
-  width : 100%;
-  border-collapse:collapse;
-}
+       td {
+           text-align:left;
+           padding-left : 80px;
+           padding-right:50px;
+           font-size : 10px;
+       }
 
-th {
-  text-align:left;
-  padding-left : 40px;
-  font-size : 17px;
-  font-weight : 100;
-}
+       tr {
+           padding-top :10px;
+           padding-bottom :10px;
+           border-bottom-style : outset;
+       }
 
-td {
-  text-align:left;
-  padding-left : 80px;
-  padding-right:50px;
-  font-size : 10px;
-}
+        placeleft {
+           float : left;
+           padding-left : 30px;
+           width: 12px;
+        }
 
-tr {
-  padding-top :10px;
-  padding-bottom :10px;
-  border-bottom-style : outset;
-}
+        placeright {
+           float : right;
+           padding-right : 150px;
+        }
 
-placeleft {
-  float : left;
-  padding-left : 30px;
-  width: 12px;
-}
+        .place {
+           margin-left : 20px;
+        }
 
-placeright {
-  float : right;
-  padding-right : 150px;
-}
+        .round {
+            border: 2px transparent green;
+            border-radius: 20px;
+            padding: 6px;
+            background-color : #abb825;
+            float : right;
+         }
 
-.place {
-  margin-left : 20px;
-}
+         .part1 {
+             padding-left : 5px;
+             padding-right : 50px;
+             padding-bottom : 10px;
+             text-align : left;
+          }
 
-.round {
-  border: 2px transparent green;
-  border-radius: 20px;
-  padding: 6px;
-  background-color : #abb825;
-  float : right;
+          .topic {
+              padding-left : 20px;
+              padding-top : 5px;
+              font-size: 25px;
+           }
 
-}
+           .topicbody {
+              padding-left : 40px;
+           }
 
-.part1 {
-  padding-left : 5px;
-  padding-right : 50px;
-  padding-bottom : 10px;
-  text-align : left;
-}
+           .button {
+               background-color: #4da6ff;
+               border: none;
+               color: white;
+               padding: 15px 32px;
+               text-align: center;
+               text-decoration: none;
+               display: inline-block;
+               font-size: 16px;
+               margin: 4px 2px;
+               cursor: pointer;
+            }
 
-.topic {
-  padding-left : 20px;
-  padding-top : 5px;
-  font-size: 25px;
-}
-
-.topicbody {
-  padding-left : 40px;
-}
-
-.button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
-
- </style>
+            @media screen and (max-width: 800px) {
+                .left, .right {
+                       width: 100%;
+                 }
+                 .left {
+                       height: 127%;
+                 }
+                 .right {
+                       height : 100%;
+                 }
+            }
+     </style>
 </head>
-<body>
 
+<body>
 <div class="split left">
     <div class="centeredleft">
         <img alt="Avatar" src="user.png" width="70%">
-        <h2><p>${trainerDto.name}</p></h2>
-        <p class="properties"><b>Software Engineer ${trainerDto.roleDto.role}</b></p>
-        <p class="properties"><b>${trainerDto.dateOfBirth}</b></p>
-        <p class="properties"><b>${trainerDto.getPhoneNumber()}</b></p>
-        <p class="properties"><b>${trainerDto.getEmailId()}</b></p>
-        <a href="updateTrainee?traineeId=${traineeDto.employeeId}" class="button">Update</a>
-        <a href="deleteTrainee?traineeId=${traineeDto.employeeId}" class="button">Delete</a>
+        <h2><p>${employeeDto.name}</p></h2>
+        <p class="properties"><b>Software Engineer ${employeeDto.roleDto.role}</b></p>
+        <p class="properties"><b>${employeeDto.dateOfBirth}</b></p>
+        <p class="properties"><b>${employeeDto.getPhoneNumber()}</b></p>
+        <p class="properties"><b>${employeeDto.getEmailId()}</b></p>
+        <a href="update${action}?employeeId=${employeeDto.employeeId}" class="button">Update</a>
+        <a href="delete${action}?employeeId=${employeeDto.employeeId}" class="button">Delete</a>
         <p class="button" onclick="history.go(-2)">Back</p>
     </div>
 </div>
-
 <div class="split right">
     <div class = "part1">
         <p class = "topic" ><b>Professional Summary</b></p>

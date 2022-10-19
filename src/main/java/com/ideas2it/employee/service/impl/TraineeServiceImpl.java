@@ -5,13 +5,12 @@
 
 package com.ideas2it.employee.service.impl;
 
+import com.ideas2it.employee.Helper.TrainerHelper;
 import com.ideas2it.employee.common.CommonUtil;
 import com.ideas2it.employee.customException.BadRequest;
 import com.ideas2it.employee.customException.TraineeNotFoundException;
-import com.ideas2it.employee.customException.TrainerNotFoundException;
 import com.ideas2it.employee.dto.TraineeDto;
 import com.ideas2it.employee.mapper.TraineeMapper;
-import com.ideas2it.employee.mapper.TrainerMapper;
 import com.ideas2it.employee.model.Qualification;
 import com.ideas2it.employee.model.Role;
 import com.ideas2it.employee.model.Trainee;
@@ -31,31 +30,27 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TraineeServiceImpl implements TraineeService {
     private final Logger logger = LogManager.getLogger(TraineeServiceImpl.class);
-@Autowired
-  TrainerServiceImpl trainerService;
-
     private final TraineeRepository traineeRepository;
-
-    @Autowired
-    TrainerRepository trainerRepository;
-
-    @Autowired
-    QualificationRepository qualificationRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    public TraineeServiceImpl(TraineeRepository traineeRepository) {
+    private final TrainerRepository trainerRepository;
+    private final QualificationRepository qualificationRepository;
+    private final RoleRepository roleRepository;
+    private TrainerHelper trainerHelper;
+    public TraineeServiceImpl( TraineeRepository traineeRepository,
+                              TrainerHelper trainerHelper,
+                              TrainerRepository trainerRepository, QualificationRepository qualificationRepository,
+                              RoleRepository roleRepository) {
+        this.trainerHelper=trainerHelper;
         this.traineeRepository = traineeRepository;
+        this.trainerRepository = trainerRepository;
+        this.qualificationRepository = qualificationRepository;
+        this.roleRepository = roleRepository;
     }
-
 
     @Override
     @Transactional
@@ -63,7 +58,6 @@ public class TraineeServiceImpl implements TraineeService {
         List<Trainee> trainees =  traineeRepository.findAll();
             return trainees.stream().map(TraineeMapper::convertTraineeToTraineeDto).collect(Collectors.toList());
         }
-
 
 
     @Override
@@ -133,14 +127,13 @@ public class TraineeServiceImpl implements TraineeService {
         Trainee trainee =  TraineeMapper.convertTraineeDtoToTrainee(traineeDto);
         Optional<Qualification> qualification = qualificationRepository.findByQualification(trainee.getQualification().getQualification());
         qualification.ifPresent(trainee::setQualification);
-        System.out.println("@@@@@@@@@@@@@"+trainee.getQualification());
-        System.out.println("111111111111111111111111111111111111111"+trainee.getRole().getRole());
+
         Optional<Role> role = roleRepository.findByRole(trainee.getRole().getRole());
         role.ifPresent(trainee::setRole);
 
         int trainingPeriod = traineeDto.getTrainingPeriod();
         List<Integer> trainersId = traineeDto.getTrainersId();
-        Set<Trainer> trainersGroup = Set.copyOf(trainerRepository.findAllById(trainersId));
+        Set<Trainer> trainersGroup = Set.copyOf(trainerHelper.getAllTrainersById(trainersId));
         trainee.setTrainers(trainersGroup);
         if (invalidOption.size() == 0) {
             int var10000 = CommonUtil.employeeId++;

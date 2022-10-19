@@ -34,8 +34,6 @@ public class EmployeeController extends HttpServlet {
     public final TrainerService trainerService;
 
     @Autowired
-    ModelMapper modelMapper;
-
     public EmployeeController(TraineeService traineeService, TrainerService trainerService) {
         this.traineeService = traineeService;
         this.trainerService = trainerService;
@@ -87,7 +85,6 @@ public class EmployeeController extends HttpServlet {
         return "index";
     }
 
-
     @GetMapping(value = "/showTrainer")
     public ModelAndView viewTrainer() {
         ModelAndView mav = new ModelAndView();
@@ -99,8 +96,18 @@ public class EmployeeController extends HttpServlet {
     @GetMapping(value = "/viewPage")
     public ModelAndView viewPage(@RequestParam("trainerId") int trainerId,Model model) {
         ModelAndView mav = new ModelAndView("viewPage");
-        mav.addObject("trainerDto", trainerService.getTrainerId(trainerId));
+        mav.addObject("employeeDto", trainerService.getTrainerId(trainerId));
+        mav.addObject("action", "Trainer");
         mav.setViewName("viewPage");
+        return mav;
+    }
+
+    @GetMapping(value = "/viewTraineePage")
+    public ModelAndView viewTraineePage(@RequestParam("traineeId") int traineeId,Model model) {
+        ModelAndView mav = new ModelAndView("viewPage");
+        mav.addObject("employeeDto", traineeService.getTraineeById(traineeId));
+        mav.addObject("action", "Trainee");
+        //mav.setViewName("viewPage");
         return mav;
     }
 
@@ -113,28 +120,28 @@ public class EmployeeController extends HttpServlet {
     }
 
     @GetMapping("/updateTrainer")
-    public ModelAndView updateTrainer(@RequestParam ("trainerId") int trainerId, Model model) {
+    public ModelAndView updateTrainer(@RequestParam ("employeeId") int trainerId, Model model) {
         ModelAndView mav = new ModelAndView("registerOrUpdateTrainer");
         TrainerDto trainerDto = trainerService.getTrainerId(trainerId);
         mav.addObject("trainerDto", trainerDto);
-        mav.addObject("action", "updateTrainer");
+        mav.addObject("action", "Trainer");
         mav.setViewName("registerOrUpdateTrainer");
         return mav;
     }
 
     @GetMapping("/updateTrainee")
-    public ModelAndView updateTrainee(@RequestParam ("traineeId") int traineeId, Model model) {
+    public ModelAndView updateTrainee(@RequestParam ("employeeId") int traineeId, Model model) {
         ModelAndView mav = new ModelAndView("registerOrUpdateTrainee");
         TraineeDto traineeDto = traineeService.getTraineeById(traineeId);
         mav.addObject("traineeDto", traineeDto);
-        mav.addObject("action", "updateTrainee");
+        mav.addObject("action", "Trainee");
         mav.addObject("trainers", trainerService.getTrainers());
         mav.setViewName("registerOrUpdateTrainee");
         return mav;
     }
 
     @GetMapping("/deleteTrainer")
-    public String deleteTrainer(@RequestParam("trainerId") int trainerId, Model model) {
+    public String deleteTrainer(@RequestParam("employeeId") int trainerId, Model model) {
         trainerService.removeTrainerDetails(trainerId);
         String message = "Trainer" + trainerId  + " deleted successfully...";
         model.addAttribute("message", message);
@@ -142,7 +149,7 @@ public class EmployeeController extends HttpServlet {
     }
 
     @GetMapping("/deleteTrainee")
-    public String deleteTrainee(@RequestParam("traineeId") int traineeId, Model model) {
+    public String deleteTrainee(@RequestParam("employeeId") int traineeId, Model model) {
         traineeService.removeTraineeDetails(traineeId);
         String message = "Trainee" + traineeId  + " deleted successfully...";
         model.addAttribute("message", message);
