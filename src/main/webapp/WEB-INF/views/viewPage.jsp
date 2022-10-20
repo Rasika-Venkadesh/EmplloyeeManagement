@@ -172,6 +172,10 @@
         <p class="properties"><b>${employeeDto.getEmailId()}</b></p>
         <a href="update${action}?employeeId=${employeeDto.employeeId}" class="button">Update</a>
         <a href="delete${action}?employeeId=${employeeDto.employeeId}" class="button">Delete</a>
+        <c:set var="action" scope="session" value="${Trainer}"/>
+        <c:if test="${action.equals('Trainer')}">
+            <a href="trainerView?employeeId=${employeeDto.employeeId}" class="button">Trainer View</a>
+        </c:if>
         <p class="button" onclick="history.go(-2)">Back</p>
     </div>
 </div>

@@ -1,8 +1,11 @@
 package com.ideas2it.employee.mapper;
 
 import com.ideas2it.employee.dto.TrainerDto;
+import com.ideas2it.employee.model.Trainee;
 import com.ideas2it.employee.model.Trainer;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Collections;
 
 
 public class TrainerMapper {
@@ -24,6 +27,11 @@ public class TrainerMapper {
                 trainerDto.setBloodGroup(trainer.getBloodGroup());
                 trainerDto.setQualificationDto(QualificationMapper.convertQualificationToQualificationDto(trainer.getQualification()));
                 trainerDto.setRoleDto(RoleMapper.convertRoleToRoleDto(trainer.getRole()));
+                for (Trainee trainee : trainer.getTrainees()) {
+                    trainerDto.setTraineeNames(Collections.singletonList(trainee.getName()));
+                }
+                trainerDto.setTrainees(trainer.getTrainees());
+                trainerDto.setTraineesId(trainer.getTraineesId());
             }
         }
         return trainerDto;
@@ -47,6 +55,8 @@ public class TrainerMapper {
                 trainer.setQualification(QualificationMapper.convertQualificationDtoToQualification(trainerDto.getQualificationDto()));
                 trainer.setRole(RoleMapper.convertRoleDtoToRole(trainerDto.getRoleDto()));
                 trainer.setExperience(trainerDto.getExperience());
+                trainer.setTrainees(trainerDto.getTrainees());
+                trainer.setTraineesId(trainerDto.getTraineesId());
                 System.out.println(trainer);
             } else {
                 trainer.setExperience(trainerDto.getExperience());
@@ -62,6 +72,8 @@ public class TrainerMapper {
                 trainer.setQualification(QualificationMapper.convertQualificationDtoToQualification(trainerDto.getQualificationDto()));
                 trainer.setRole(RoleMapper.convertRoleDtoToRole(trainerDto.getRoleDto()));
                 trainer.setExperience(trainerDto.getExperience());
+                trainer.setTrainees(trainerDto.getTrainees());
+                trainer.setTraineesId(trainerDto.getTraineesId());
             }
         }
         return trainer;

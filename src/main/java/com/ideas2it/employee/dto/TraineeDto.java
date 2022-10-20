@@ -2,6 +2,7 @@ package com.ideas2it.employee.dto;
 
 import com.ideas2it.employee.model.Trainer;
 import lombok.*;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Set;
@@ -15,5 +16,6 @@ public class TraineeDto extends EmployeeDto{
     private Set<Trainer> trainers;
     private List<Integer> trainersId;
     private List<String> trainerNames;
+
 
 }

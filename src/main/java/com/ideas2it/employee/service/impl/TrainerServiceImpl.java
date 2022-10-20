@@ -1,13 +1,12 @@
 package com.ideas2it.employee.service.impl;
 
-import com.ideas2it.employee.common.CommonUtil;
+import com.ideas2it.employee.Helper.TrainerHelper;
 import com.ideas2it.employee.customException.BadRequest;
 import com.ideas2it.employee.customException.TrainerNotFoundException;
-import com.ideas2it.employee.dto.QualificationDto;
-import com.ideas2it.employee.mapper.QualificationMapper;
 import com.ideas2it.employee.mapper.TrainerMapper;
 import com.ideas2it.employee.model.Qualification;
 import com.ideas2it.employee.model.Role;
+import com.ideas2it.employee.model.Trainee;
 import com.ideas2it.employee.repository.QualificationRepository;
 import com.ideas2it.employee.repository.RoleRepository;
 import com.ideas2it.employee.repository.TrainerRepository;
@@ -20,25 +19,34 @@ import com.ideas2it.employee.dto.TrainerDto;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.ideas2it.employee.common.CommonUtil.employeeId;
 
 @Service
 public  class TrainerServiceImpl implements TrainerService {
     private final Logger logger = LogManager.getLogger(TrainerServiceImpl.class);
-    @Autowired
-    private TrainerRepository trainerRepository;
-    @Autowired
+
+    private final TrainerRepository trainerRepository;
+
     private RoleRepository roleRepository;
-    @Autowired
     private QualificationRepository qualificationRepository;
 
-    public TrainerServiceImpl() {
+    private TrainerHelper trainerHelper;
+
+
+    public TrainerServiceImpl(TrainerRepository trainerRepository, RoleRepository roleRepository,
+                              QualificationRepository qualificationRepository, TrainerHelper trainerHelper) {
+        this.trainerRepository = trainerRepository;
+        this.roleRepository = roleRepository;
+        this.qualificationRepository = qualificationRepository;
+        this.trainerHelper = trainerHelper;
     }
 
     @Override
@@ -50,6 +58,7 @@ public  class TrainerServiceImpl implements TrainerService {
             return trainers.stream().map(TrainerMapper::convertTrainerToTrainerDto).collect(Collectors.toList());
         }
     }
+
 
     @Override
     public TrainerDto getTrainerId(int trainerId) throws TrainerNotFoundException {
@@ -67,6 +76,12 @@ public  class TrainerServiceImpl implements TrainerService {
         trainerRepository.deleteById(trainerId);
         this.logger.debug("\n\tTrainer is deleted.....\n");
     }
+
+    @Override
+     public Trainee getTraineeByTrainerId(int trainerId) {
+        return trainerHelper.getTraineeDetailsById(trainerId);
+    }
+
 
     public List<Integer> validateAndAddTrainerDetails(TrainerDto trainerDto) {
         List<Integer> invalidOption = new ArrayList<>();
@@ -111,15 +126,25 @@ public  class TrainerServiceImpl implements TrainerService {
         }
 
         String bloodGroup = trainerDto.getBloodGroup();
+
         Trainer trainer =  TrainerMapper.convertTrainerDtoToTrainer(trainerDto);
+
         Optional<Qualification> qualification = qualificationRepository.findByQualification(trainer.getQualification().getQualification());
         qualification.ifPresent(trainer::setQualification);
+
         Optional<Role> role = roleRepository.findByRole(trainerDto.getRoleDto().getRole());
         role.ifPresent(trainer::setRole);
 
         int experience = trainerDto.getExperience();
+
+        /*List<Integer> traineesId = trainerDto.getTraineesId();
+        Set<Trainee> traineesGroup = Set.copyOf(trainerHelper.getAllTraineeDetailsById(traineesId));
+        trainer.setTrainees(traineesGroup); */
+
+        Trainee trainee = trainerHelper.getTraineeDetailsById(employeeId);
+
         if (invalidOption.size() == 0) {
-            int var10000 = CommonUtil.employeeId++;
+            int var10000 = employeeId++;
             trainerRepository.save(trainer);
         } else {
             throw new BadRequest(invalidOption, invalidOptionDetails);

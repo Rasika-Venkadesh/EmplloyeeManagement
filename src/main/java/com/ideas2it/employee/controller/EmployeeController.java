@@ -107,7 +107,17 @@ public class EmployeeController extends HttpServlet {
         ModelAndView mav = new ModelAndView("viewPage");
         mav.addObject("employeeDto", traineeService.getTraineeById(traineeId));
         mav.addObject("action", "Trainee");
-        //mav.setViewName("viewPage");
+        return mav;
+    }
+
+    @GetMapping(value = "/trainerView")
+    public ModelAndView trainerView(@RequestParam("employeeId") int trainerId, Model model) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("employeeDto", trainerService.getTrainerId(trainerId));
+        mav.addObject("trainerDto",trainerService.getTrainers());
+        mav.addObject("traineeDto", trainerService.getTraineeByTrainerId(trainerId));
+        mav.addObject("Trainers", trainerService.getTrainers());
+
         return mav;
     }
 
