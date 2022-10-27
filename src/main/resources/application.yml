@@ -10,15 +10,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
-      hibernate:
+      hibernate :
+        auto-ddl : create
+        show-sql : true
         dialect : org.hibernate.dialect.MySQL5Dialect
-  logging:
-    file: logs/application-debug.log
-    pattern:
-      console: "%d %-5level %logger : %msg%n"
-      file: "%d %-5level [%thread] %logger : %msg%n"
-    level:
-      org.springframework.web: ERROR
-      com.ideas2it.employee: DEBUG
-      org.hibernate: ERROR
 
